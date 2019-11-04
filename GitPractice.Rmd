@@ -1,8 +1,4 @@
----
-title: "Git Practice with RStudio"
-author: "Your name here"
-output: html_document
----
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -40,7 +36,8 @@ To answer this question, you will need to:
 Filter the heroes data to only include Marvel or DC. You can also eliminate the DC version of Captain Marvel.
 
 ```{r}
-
+publish <- heroes%>%
+  group_by(Publisher)
 ```
 
 
