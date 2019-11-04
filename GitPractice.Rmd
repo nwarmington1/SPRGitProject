@@ -1,4 +1,5 @@
-
+nwarmington1
+thats right
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -38,6 +39,7 @@ Filter the heroes data to only include Marvel or DC. You can also eliminate the 
 ```{r}
 publish <- heroes%>%
   group_by(Publisher)
+
 ```
 
 
