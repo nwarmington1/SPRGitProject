@@ -37,9 +37,9 @@ To answer this question, you will need to:
 Filter the heroes data to only include Marvel or DC. You can also eliminate the DC version of Captain Marvel.
 
 ```{r}
-publish <- heroes%>%
-  group_by(Publisher)
-
+marv_DC <- heroes %>%
+  group_by(Publisher)%>%
+  filter(Publisher == "Marvel Comics" | Publisher == "DC Comics" )
 ```
 
 
@@ -48,7 +48,9 @@ publish <- heroes%>%
 Create a new variable called "num_powers" in the powers data set counting the number of powers each character has. (This is tricky; there are multiple ways to approach this. You may want to play with the rowSums() function, or see Boern's answer [here](https://stackoverflow.com/questions/28873057/sum-across-multiple-columns-with-dplyr)).
 
 ```{r}
-
+tmp_powers <- powers %>% 
+  mutate(num_powers = rowSums(.[2:168]))
+head(tmp_powers)
 ```
 
 
@@ -60,6 +62,9 @@ Join the two data sets together by character name and only keep name, publisher,
 
 ```{r}
 
+joined_heroes <- left_join(marv_DC, tmp_powers, by = c("name" = "hero_names")) %>%
+  select(name, Publisher, num_powers)
+joined_heroes
 ```
 
 
@@ -68,7 +73,9 @@ Join the two data sets together by character name and only keep name, publisher,
 Group by publisher and look at the distributions of numbers of powers within each publisher by creating summary tables (min, median, mean, max)
 
 ```{r}
-
+joined_heroes%>%
+  group_by(Publisher)%>%
+  summarize(min_powers = min())
 ```
 
 
