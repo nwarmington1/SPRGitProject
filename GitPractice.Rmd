@@ -73,9 +73,13 @@ joined_heroes
 Group by publisher and look at the distributions of numbers of powers within each publisher by creating summary tables (min, median, mean, max)
 
 ```{r}
-joined_heroes%>%
+sum_table <- joined_heroes%>%
   group_by(Publisher)%>%
-  summarize(min_powers = min())
+  summarize(min_powers = min(num_powers, na.rm = TRUE),
+            med_powers = median(num_powers, na.rm = TRUE),
+            mean_powers = mean(num_powers, na.rm = TRUE),
+            max_powers = max(num_powers, na.rm = TRUE))
+sum_table
 ```
 
 
@@ -84,7 +88,8 @@ joined_heroes%>%
 Create a graph such as a histogram or boxplot showing the numbers of powers per character for Marvel vs DC. 
 
 ```{r}
-
+ggplot(data = joined_heroes)+
+  geom_boxplot(mapping = aes(x = Publisher, y = num_powers))
 ```
 
 
@@ -93,6 +98,9 @@ Create a graph such as a histogram or boxplot showing the numbers of powers per 
 Write a couple sentences to compare the distributions and decide if one publisher seems to have characters with more powers overall.
 
 __Your answer:__
+DC seems to give its heroes more powers than Marvel. Dc has a higher median, mean, and maximum number of powers given to heroes. The spread for DC in the boxplot is also longer, with the greatest 50 % of the powers being higher than Marvel.
+
+
 
 
 
@@ -101,6 +109,8 @@ __Your answer:__
 Write a couple sentences critiquing this approach. Discuss at least one major problem that prevents our code from actually measuring what we are trying to measure.
 
 __Your answer:__
+The main issue with this method is that it cannot work with NA values. If DC has many more NA values for its heroes, it may not be completely accurate to say that it gives its heroes more powers overall.
+
 
 
 
